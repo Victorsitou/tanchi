@@ -125,6 +125,9 @@ def parse_parameter(
     elif types := _try_channel_option(annotation):
         command.add_channel_option(name, description, default=default, types=types)
 
+    elif issubclass_(annotation, hikari.Attachment):
+        command.add_attachment_option(name, description, default=default)
+
     else:
         raise TypeError(f"Unknown slash command option type: {annotation!r}")
 

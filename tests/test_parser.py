@@ -155,3 +155,19 @@ def test_parse_parameter_with_misc():
 
     with pytest.raises(TypeError):
         parser.parse_parameter(command, name="foo", annotation=object())
+
+
+def test_parse_parameter_with_attachment():
+    command: tanjun.SlashCommand = mock.Mock(tanjun.SlashCommand)
+    parser.parse_parameter(
+        command,
+        name="attachment",
+        description="description",
+        annotation=hikari.Attachment,
+        default=None,
+    )
+    command.add_attachment_option.assert_called_once_with(
+        "attachment",
+        "description",
+        default=None,
+    )
